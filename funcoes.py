@@ -23,5 +23,23 @@ def faz_jogada(tabuleiro,linha,coluna):
     else:
         tabuleiro[linha][coluna] = '-'
     return tabuleiro
-        
-     
+
+def posiciona_frota(frota):
+    tabuleiro = [
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0],
+  ]
+    for navios in frota.values():
+        for navio in navios:
+            for pos in navio:
+                tabuleiro[pos[0]][pos[1]] = 1
+    return tabuleiro
+
