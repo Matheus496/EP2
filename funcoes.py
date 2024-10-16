@@ -49,7 +49,7 @@ def afundados(frota,tabuleiro):
     for navios in frota.values():
         for navio in navios:
             ocupa = []
-            
+
             for pos in navio:
                 if tabuleiro[pos[0]][pos[1]] == 'X':
                     ocupa.append('X')
@@ -57,3 +57,17 @@ def afundados(frota,tabuleiro):
                 if len(ocupa) == len(navio):
                     navios_afundados += 1
     return navios_afundados
+
+def posicao_valida(frota,linha,coluna,orient,tamanho):
+    escolha = define_posicoes(linha,coluna,orient,tamanho)
+    for c in escolha:
+        for num in c:
+            if num > 9:
+                return False
+    for navios in frota.values():
+        for navio in navios:
+            for pos in navio:
+                if pos in escolha:
+                    return False
+    return True
+
