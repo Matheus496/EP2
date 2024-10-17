@@ -5,7 +5,9 @@ from funcoes import posiciona_frota
 from funcoes import monta_tabuleiros
 from funcoes import faz_jogada
 from funcoes import afundados
+import random as rn
 
+rn.seed(2)
 navios =['porta-aviões','navio-tanque','navio-tanque','contratorpedeiro','contratorpedeiro','contratorpedeiro','submarino','submarino','submarino','submarino']
 tamanhos = {'porta-aviões': 4,'navio-tanque':3,'contratorpedeiro':2,'submarino':1}
 frota = {
@@ -65,6 +67,7 @@ while jogando == True:
     tabuleiro_oponente = posiciona_frota(frota_oponente)
     tabubuleiro_jog = posiciona_frota(frota)
     posicao = []
+    ataques_op = []
     tabuleiros = monta_tabuleiros(tabubuleiro_jog,tabuleiro_oponente)
     print(tabuleiros)
     while True:
@@ -89,10 +92,30 @@ while jogando == True:
 
         tabuleiro_oponente = faz_jogada(tabuleiro_oponente,linha_ata,coluna_ata)
         n_afund = afundados(frota_oponente,tabuleiro_oponente)
+        
         if n_afund == 10:
             print('Parabéns! Você derrubou todos os navios do seu oponente!')
             jogando = False
             break
+        
+        
+        oponente_linha_ata = rn.randint(0,9)
+        oponente_col_ata = rn.randint(0,9)
+        
+        while [oponente_linha_ata,oponente_col_ata] in ataques_op:
+            oponente_linha_ata = rn.randint(0,9)
+            oponente_col_ata = rn.randint(0,9)
+        ataques_op.append([oponente_linha_ata,oponente_col_ata])
+        print(f'Seu oponente está atacando na linha {oponente_linha_ata} e coluna {oponente_col_ata}')
+        
+        tabubuleiro_jog = faz_jogada(tabubuleiro_jog,oponente_linha_ata,oponente_col_ata)
+        n_afund_jog = afundados(frota,tabubuleiro_jog)
+
+        if n_afund_jog == 10:
+            print('Xi! O oponente derrubou toda a sua frota =(')
+            jogando = False
+            break
+        
         tabuleiros = monta_tabuleiros(tabubuleiro_jog,tabuleiro_oponente)
         print(tabuleiros)
         
